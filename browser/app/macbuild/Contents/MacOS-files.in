@@ -1,0 +1,9 @@
+/*.app/***
+/*.dylib
+/certutil
+/kitakitsune-chan-bin
+/gtest/***
+/pk12util
+/ssltunnel
+/xpcshell
+/XUL
