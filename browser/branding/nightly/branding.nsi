@@ -2,22 +2,22 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# NSIS branding defines for unofficial builds.
+# NSIS branding defines for nightly builds.
 # The official release build branding.nsi is located in other-license/branding/firefox/
-# The nightly build branding.nsi is located in browser/installer/windows/nsis/
+# The unofficial build branding.nsi is located in browser/branding/unofficial/
 
 # BrandFullNameInternal is used for some registry and file system values
 # instead of BrandFullName and typically should not be modified.
-!define BrandFullNameInternal "Mozilla Developer Preview"
+!define BrandFullNameInternal "Yukarum Redfoxes"
 !define CompanyName           "mozilla.org"
 !define URLInfoAbout          "https://www.mozilla.org"
 !define HelpLink              "https://support.mozilla.org"
 
-!define URLStubDownload32 "http://download.mozilla.org/?os=win&lang=${AB_CD}&product=firefox-latest"
-!define URLStubDownload64 "http://download.mozilla.org/?os=win64&lang=${AB_CD}&product=firefox-latest"
-!define URLManualDownload "https://www.mozilla.org/${AB_CD}/firefox/installer-help/?channel=release&installer_lang=${AB_CD}"
+!define URLStubDownload32 "http://download.mozilla.org/?os=win&lang=${AB_CD}&product=firefox-nightly-latest"
+!define URLStubDownload64 "http://download.mozilla.org/?os=win64&lang=${AB_CD}&product=firefox-nightly-latest"
+!define URLManualDownload "https://www.mozilla.org/${AB_CD}/firefox/installer-help/?channel=nightly&installer_lang=${AB_CD}"
 !define URLSystemRequirements "https://www.mozilla.org/firefox/system-requirements/"
-!define Channel "unofficial"
+!define Channel "nightly"
 
 # The installer's certificate name and issuer expected by the stub installer
 !define CertNameDownload   "Mozilla Corporation"
@@ -28,7 +28,7 @@
 # The dialog units for the bitmap's dimensions should match exactly with the
 # bitmap's width and height in pixels.
 !define APPNAME_BMP_WIDTH_DU 159u
-!define APPNAME_BMP_HEIGHT_DU 50u
+!define APPNAME_BMP_HEIGHT_DU 28u
 !define INTRO_BLURB_WIDTH_DU "230u"
 !define INTRO_BLURB_EDGE_DU "198u"
 !define INTRO_BLURB_LTR_TOP_DU "16u"
