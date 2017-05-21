@@ -10,25 +10,32 @@ Components.utils.import("resource://gre/modules/PluralForm.jsm");
 Components.utils.import("resource://gre/modules/Services.jsm")
 Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
 
+XPCOMUtils.defineLazyModuleGetter(this, "SiteDataManager",
+                                  "resource:///modules/SiteDataManager.jsm");
 XPCOMUtils.defineLazyModuleGetter(this, "ContextualIdentityService",
                                   "resource://gre/modules/ContextualIdentityService.jsm");
 
 var gCookiesWindow = {
-  _cm               : Components.classes["@mozilla.org/cookiemanager;1"]
-                                .getService(Components.interfaces.nsICookieManager),
-  _hosts            : {},
-  _hostOrder        : [],
-  _tree             : null,
-  _bundle           : null,
+  _cm: Components.classes["@mozilla.org/cookiemanager;1"]
+                    .getService(Components.interfaces.nsICookieManager),
+  _hosts: {},
+  _hostOrder: [],
+  _tree: null,
+  _bundle: null,
 
   init() {
     var os = Components.classes["@mozilla.org/observer-service;1"]
                        .getService(Components.interfaces.nsIObserverService);
-    os.addObserver(this, "cookie-changed", false);
-    os.addObserver(this, "perm-changed", false);
+    os.addObserver(this, "cookie-changed");
+    os.addObserver(this, "perm-changed");
 
     this._bundle = document.getElementById("bundlePreferences");
     this._tree = document.getElementById("cookiesList");
+
+    let removeAllCookies = document.getElementById("removeAllCookies");
+    removeAllCookies.setAttribute("accesskey", this._bundle.getString("removeAllCookies.accesskey"));
+    let removeSelectedCookies = document.getElementById("removeSelectedCookies");
+    removeSelectedCookies.setAttribute("accesskey", this._bundle.getString("removeSelectedCookies.accesskey"));
 
     this._populateList(true);
 
@@ -76,21 +83,12 @@ var gCookiesWindow = {
                                                aCookieB.originAttributes);
   },
 
-  _isPrivateCookie(aCookie) {
-      let { userContextId } = aCookie.originAttributes;
-      if (!userContextId) {
-        // Default identity is public.
-        return false;
-      }
-      return !ContextualIdentityService.getIdentityFromId(userContextId).public;
-  },
-
   observe(aCookie, aTopic, aData) {
     if (aTopic != "cookie-changed")
       return;
 
     if (aCookie instanceof Components.interfaces.nsICookie) {
-      if (this._isPrivateCookie(aCookie)) {
+      if (SiteDataManager.isPrivateCookie(aCookie)) {
         return;
       }
 
@@ -196,12 +194,12 @@ var gCookiesWindow = {
   },
 
   _view: {
-    _filtered   : false,
-    _filterSet  : [],
+    _filtered: false,
+    _filterSet: [],
     _filterValue: "",
-    _rowCount   : 0,
-    _cacheValid : 0,
-    _cacheItems : [],
+    _rowCount: 0,
+    _cacheValid: 0,
+    _cacheItems: [],
     get rowCount() {
       return this._rowCount;
     },
@@ -227,7 +225,7 @@ var gCookiesWindow = {
           return currHost;
         hostIndex = count;
 
-        var cacheEntry = { "start" : i, "count" : count };
+        var cacheEntry = { "start": i, "count": count };
         var cacheStart = count;
 
         if (currHost.open) {
@@ -448,11 +446,11 @@ var gCookiesWindow = {
 
   _addCookie(aStrippedHost, aCookie, aHostCount) {
     if (!(aStrippedHost in this._hosts) || !this._hosts[aStrippedHost]) {
-      this._hosts[aStrippedHost] = { cookies   : [],
-                                     rawHost   : aStrippedHost,
-                                     level     : 0,
-                                     open      : false,
-                                     container : true };
+      this._hosts[aStrippedHost] = { cookies: [],
+                                     rawHost: aStrippedHost,
+                                     level: 0,
+                                     open: false,
+                                     container: true };
       this._hostOrder.push(aStrippedHost);
       ++aHostCount.value;
     }
@@ -462,16 +460,16 @@ var gCookiesWindow = {
   },
 
   _makeCookieObject(aStrippedHost, aCookie) {
-    var c = { name            : aCookie.name,
-              value           : aCookie.value,
-              isDomain        : aCookie.isDomain,
-              host            : aCookie.host,
-              rawHost         : aStrippedHost,
-              path            : aCookie.path,
-              isSecure        : aCookie.isSecure,
-              expires         : aCookie.expires,
-              level           : 1,
-              container       : false,
+    var c = { name: aCookie.name,
+              value: aCookie.value,
+              isDomain: aCookie.isDomain,
+              host: aCookie.host,
+              rawHost: aStrippedHost,
+              path: aCookie.path,
+              isSecure: aCookie.isSecure,
+              expires: aCookie.expires,
+              level: 1,
+              container: false,
               originAttributes: aCookie.originAttributes };
     return c;
   },
@@ -484,7 +482,7 @@ var gCookiesWindow = {
     while (e.hasMoreElements()) {
       var cookie = e.getNext();
       if (cookie && cookie instanceof Components.interfaces.nsICookie) {
-        if (this._isPrivateCookie(cookie)) {
+        if (SiteDataManager.isPrivateCookie(cookie)) {
           continue;
         }
 
@@ -499,12 +497,9 @@ var gCookiesWindow = {
   formatExpiresString(aExpires) {
     if (aExpires) {
       var date = new Date(1000 * aExpires);
-      const locale = Components.classes["@mozilla.org/chrome/chrome-registry;1"]
-                     .getService(Components.interfaces.nsIXULChromeRegistry)
-                     .getSelectedLocale("global", true);
       const dtOptions = { year: "numeric", month: "long", day: "numeric",
                           hour: "numeric", minute: "numeric", second: "numeric" };
-      return date.toLocaleString(locale, dtOptions);
+      return date.toLocaleString(undefined, dtOptions);
     }
     return this._bundle.getString("expireAtEndOfSession");
   },
@@ -571,7 +566,7 @@ var gCookiesWindow = {
       }
     }
 
-    let buttonLabel = this._bundle.getString("removeSelectedCookies");
+    let buttonLabel = this._bundle.getString("removeSelectedCookies.label");
     let removeSelectedCookies = document.getElementById("removeSelectedCookies");
     removeSelectedCookies.label = PluralForm.get(selectedCookieCount, buttonLabel)
                                             .replace("#1", selectedCookieCount);
@@ -741,7 +736,7 @@ var gCookiesWindow = {
     }
   },
 
-  _lastSortProperty : "",
+  _lastSortProperty: "",
   _lastSortAscending: false,
   sort(aProperty) {
     var ascending = (aProperty == this._lastSortProperty) ? !this._lastSortAscending : true;
@@ -877,7 +872,17 @@ var gCookiesWindow = {
   },
 
   _updateRemoveAllButton: function gCookiesWindow__updateRemoveAllButton() {
-    document.getElementById("removeAllCookies").disabled = this._view._rowCount == 0;
+    let removeAllCookies = document.getElementById("removeAllCookies");
+    removeAllCookies.disabled = this._view._rowCount == 0;
+
+    let labelStringID = "removeAllCookies.label";
+    let accessKeyStringID = "removeAllCookies.accesskey";
+    if (this._view._filtered) {
+      labelStringID = "removeAllShownCookies.label";
+      accessKeyStringID = "removeAllShownCookies.accesskey";
+    }
+    removeAllCookies.setAttribute("label", this._bundle.getString(labelStringID));
+    removeAllCookies.setAttribute("accesskey", this._bundle.getString(accessKeyStringID));
   },
 
   filter() {
