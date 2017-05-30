@@ -2,19 +2,12 @@ Bad English:
 Yukarum Redfoxes is FIrefox Based Browser.  
 I am making in hobbies. i don't response any feedback and pull request. sorry :(
 
-This Code is MIT Licence.
+This Code is MPL.
 
-‚É‚Ù‚ñ‚²:  
-Yukarum Redfoxes‚ÍFirefox‚ªƒx[ƒX‚ÌƒSƒ~ƒuƒ‰ƒEƒU‚Å‚·B  
-Žï–¡‚Åì‚Á‚Ä‚é‚Ì‚ÅA‚Ç‚ñ‚ÈƒtƒB[ƒhƒoƒbƒN‚âPull Request‚É‚à‰ž“š‚·‚é‚Â‚à‚è‚Í‚ ‚è‚Ü‚¹‚ñB‚·‚Ü‚ñ‚ËB  
-–³—¿C‚¾‚©‚çƒvƒ‰ƒCƒx[ƒgƒŒƒ|ƒWƒgƒŠ‚ªì‚ê‚È‚¢‚Ì‚¾‚æB
+ã«ã»ã‚“ã”:  
+Yukarum Redfoxesã¯FirefoxãŒãƒ™ãƒ¼ã‚¹ã®ã‚´ãƒŸãƒ–ãƒ©ã‚¦ã‚¶ã§ã™ã€‚  
+è¶£å‘³ã§ä½œã£ã¦ã‚‹ã®ã§ã€ã©ã‚“ãªãƒ•ã‚£ãƒ¼ãƒ‰ãƒãƒƒã‚¯ã‚„Pull Requestã«ã‚‚å¿œç­”ã™ã‚‹ã¤ã‚‚ã‚Šã¯ã‚ã‚Šã¾ã›ã‚“ã€‚ã™ã¾ã‚“ã­ã€‚  
+ç„¡æ–™åž¢ã ã‹ã‚‰ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆãƒ¬ãƒã‚¸ãƒˆãƒªãŒä½œã‚Œãªã„ã®ã ã‚ˆã€‚
 
-‚±‚¢‚Â‚ÍMIT Licence‚Åˆê‰žã‚°‚Ä‚¢‚Ü‚·B  
-ŽÀÛŽ©•ª‚à‚æ‚­•ª‚©‚Á‚Ä‚¢‚Ü‚¹‚ñBÚ‚µ‚­‚Í’²‚×‚ÄB  
-
-Wikipedia‚©‚çˆø‚Á’£‚Á‚Ä‚­‚é‚Æ
-
-1.‚±‚Ìƒ\ƒtƒgƒEƒFƒA‚ð’N‚Å‚à–³ž‚Å–³§ŒÀ‚Éˆµ‚Á‚Ä—Ç‚¢B‚½‚¾‚µA’˜ìŒ •\Ž¦‚¨‚æ‚Ñ–{‹–‘ø•\Ž¦‚ðƒ\ƒtƒgƒEƒFƒA‚Ì‚·‚×‚Ä‚Ì•¡»‚Ü‚½‚Íd—v‚È•”•ª‚É‹LÚ‚µ‚È‚¯‚ê‚Î‚È‚ç‚È‚¢B  
-2.ìŽÒ‚Ü‚½‚Í’˜ìŒ ŽÒ‚ÍAƒ\ƒtƒgƒEƒFƒA‚ÉŠÖ‚µ‚Ä‚È‚ñ‚çÓ”C‚ð•‰‚í‚È‚¢B
-
-
+ã“ã„ã¤ã¯MPLã§ä¸Šã’ã¦ã„ã¾ã™ã€‚  
+ç´°ã‹ã„äº‹ã¯èª¿ã¹ã‚ã€‚
